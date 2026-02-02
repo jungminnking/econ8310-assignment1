@@ -42,21 +42,23 @@ modelFit = model.fit(train_p)
 
 # Creating an empty dataframe with dates for future periods (744) 
 # At this point, didn't feel like having to use test.csv
-future = m.make_future_dataframe(periods=744, freq = 'h')
+future = modelFit.make_future_dataframe(periods=744, freq = 'h')
 
 # Filling in dataframe wtih forecasts of `y` for the future periods
-forecast = m.predict(future)
+forecast = modelFit.predict(future)
 forecast.head()
 
 # Plotting the model together with the forecast
-fig = m.plot(forecast)
+fig = modelFit.plot(forecast)
 fig.show()
 
 # Plotting the components of the forecast
-fig = m.plot_components(forecast)
+fig = modelFit.plot_components(forecast)
 fig.show()
 
 # Raw forecast numbers & Creating a vector
-pred = forecast[['ds','yhat']]
+raw = forecast[['ds','yhat']][-744:]
+raw.columns = ['Timestamp', 'pred'] 
+raw.index = raw['Timestamp']
+pred = raw['pred']
 pred.head()
-
