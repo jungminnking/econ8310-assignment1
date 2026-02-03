@@ -57,8 +57,4 @@ fig = modelFit.plot_components(forecast)
 fig.show()
 
 # Raw forecast numbers & Creating a vector
-raw = forecast[['ds','yhat']][-744:]
-raw.columns = ['Timestamp', 'pred'] 
-raw.index = raw['Timestamp']
-pred = raw['pred']
-pred.head()
+pred = forecast['yhat'].iloc[-744:].to_numpy()
